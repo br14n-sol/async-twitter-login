@@ -1,0 +1,59 @@
+{
+  "name": "async-twitter-login",
+  "version": "0.0.1",
+  "description": "Simple Twitter login, without much of the bullshit. and promises... who doesn't like them?",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "author": {
+    "name": "Brian Fernandez",
+    "url": "https://twitter.com/br14n_sol"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build"
+  },
+  "keywords": [
+    "twitter",
+    "login",
+    "promises",
+    "auth",
+    "oauth",
+    "twitter login",
+    "oauth with promises",
+    "twitter api",
+    "api",
+    "async twitter login",
+    "async"
+  ],
+  "eslintConfig": {
+    "extends": "standard",
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@types/oauth": "^0.9.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.60.1",
+    "rollup-plugin-dts": "^4.0.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "standard": "^16.0.4",
+    "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "oauth": "^0.9.15"
+  },
+  "homepage": "https://github.com/br14n-sol/async-twitter-login#readme",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/br14n-sol/async-twitter-login.git"
+  },
+  "bugs": {
+    "url": "https://github.com/br14n-sol/async-twitter-login/issues"
+  }
+}
