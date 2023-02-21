@@ -1,0 +1,14 @@
+{
+  "name": "Build",
+  "entry": ["./src/**/*.ts"],
+  
+  "outDir": "./lib",
+  "format": ["esm", "cjs"],
+
+  "dts": true,
+  "clean": true,
+  "platform": "node",
+  "bundle": false,
+
+  "tsconfig": "./tsconfig.json"
+}
