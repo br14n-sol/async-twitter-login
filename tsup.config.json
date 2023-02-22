@@ -1,6 +1,6 @@
 {
   "name": "Build",
-  "entry": ["./src/**/*.ts"],
+  "entry": ["./src/**/!(*.d).ts"],
   
   "outDir": "./lib",
   "format": ["esm", "cjs"],
