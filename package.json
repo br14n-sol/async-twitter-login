@@ -15,9 +15,15 @@
     "./lib"
   ],
   "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --fix --ext .ts",
+    "prebuild": "npm run lint",
     "build": "tsup --config tsup.config.json"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.4.4",
+    "@commitlint/config-conventional": "^17.4.4",
     "@types/oauth": "^0.9.1",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "eslint": "^8.34.0",
@@ -25,6 +31,7 @@
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.6.1",
     "eslint-plugin-promise": "^6.1.1",
+    "husky": "^8.0.3",
     "tsup": "^6.6.3",
     "typescript": "^4.9.5"
   },
