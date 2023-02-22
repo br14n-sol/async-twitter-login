@@ -1,39 +1,27 @@
 import { OAuth } from 'oauth'
-import {
-  type IConstructorOptions,
-  type ICallbackOptions,
-  type IRequestResponse,
-  type ICallbackResponse
+import type {
+  IConstructorOptions,
+  ICallbackOptions,
+  IRequestResponse,
+  ICallbackResponse
 } from './types'
 
 const REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 const ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
+
+// Taking into account: https://stackoverflow.com/questions/14336605/twitter-does-not-remember-authorization
 const AUTHENTICATE_URL = 'https://api.twitter.com/oauth/authenticate'
 
 class AsyncTwitterLogin {
-  consumerKey: string
-  consumerSecret: string
-  callbackUrl: string
-  oauth: OAuth
+  private readonly consumerKey: string
+  private readonly consumerSecret: string
+  private readonly callbackUrl: string
+  private readonly oauth: OAuth
 
-  constructor ({
-    consumerKey,
-    consumerSecret,
-    callbackUrl
-  }: IConstructorOptions) {
-    if (typeof consumerKey !== 'string') {
-      throw new Error('AsyncTwitterLogin: `consumerKey` is required')
-    }
-    if (typeof consumerSecret !== 'string') {
-      throw new Error('AsyncTwitterLogin: `consumerSecret` is required')
-    }
-    if (typeof callbackUrl !== 'string') {
-      throw new Error('AsyncTwitterLogin: `callbackUrl` is required')
-    }
-
-    this.consumerKey = consumerKey
-    this.consumerSecret = consumerSecret
-    this.callbackUrl = callbackUrl
+  constructor (args: IConstructorOptions) {
+    this.consumerKey = args.consumerKey
+    this.consumerSecret = args.consumerSecret
+    this.callbackUrl = args.callbackUrl
     this.oauth = new OAuth(
       REQUEST_TOKEN_URL,
       ACCESS_TOKEN_URL,
@@ -47,7 +35,7 @@ class AsyncTwitterLogin {
 
   async request (): Promise<IRequestResponse> {
     return await new Promise((resolve, reject) => {
-      this.oauth.getOAuthRequestToken((error, token, tokenSecret, results) => {
+      this.oauth.getOAuthRequestToken((error, oauthToken, oauthTokenSecret, results) => {
         if (error != null) {
           reject(error)
           return
@@ -59,8 +47,12 @@ class AsyncTwitterLogin {
           return
         }
 
-        const redirectUrl = `${AUTHENTICATE_URL}?oauth_token=${token}`
-        resolve({ token, tokenSecret, redirectUrl })
+        const redirectUrl = `${AUTHENTICATE_URL}?oauth_token=${oauthToken}`
+        resolve({
+          token: oauthToken,
+          tokenSecret: oauthTokenSecret,
+          redirectUrl
+        })
       })
     })
   }
@@ -71,34 +63,20 @@ class AsyncTwitterLogin {
     verifier
   }: ICallbackOptions): Promise<ICallbackResponse> {
     return await new Promise((resolve, reject) => {
-      if (typeof token !== 'string') {
-        reject(new Error('AsyncTwitterLogin: `token` is required'))
-        return
-      }
-      if (typeof tokenSecret !== 'string') {
-        reject(new Error('AsyncTwitterLogin: `tokenSecret` is required'))
-        return
-      }
-      if (typeof verifier !== 'string') {
-        reject(new Error('AsyncTwitterLogin: `verifier` is required'))
-        return
-      }
-
-      this.oauth.getOAuthAccessToken(token, tokenSecret, verifier,
-        (error, userToken, userTokenSecret, results) => {
-          if (error != null) {
-            reject(error)
-            return
-          }
-
-          const { user_id: id, screen_name: userName } = results
-          resolve({
-            id,
-            userName,
-            token: userToken,
-            tokenSecret: userTokenSecret
-          })
+      this.oauth.getOAuthAccessToken(token, tokenSecret, verifier, (error, oauthAccessToken, oauthAccessTokenSecret, results) => {
+        if (error != null) {
+          reject(error)
+          return
         }
+
+        const { user_id: id, screen_name: userName } = results
+        resolve({
+          id,
+          userName,
+          token: oauthAccessToken,
+          tokenSecret: oauthAccessTokenSecret
+        })
+      }
       )
     })
   }
