@@ -1,9 +1,7 @@
 # async-twitter-login
 
 ![npm](https://img.shields.io/npm/v/async-twitter-login)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/async-twitter-login)
 ![npm](https://img.shields.io/npm/dm/async-twitter-login)
-![Libraries.io SourceRank](https://img.shields.io/librariesio/sourcerank/npm/async-twitter-login)
 
 Simple Twitter login, without much of the bullshit. and promises... who doesn't like them?
 
@@ -100,6 +98,8 @@ app.get('/auth/callback', async (req, res) => {
 })
 ```
 
-## License
+## Copyright & License
 
-MIT License © 2021 - 2023 [Brian Fernandez](https://twitter.com/br14n_sol).
+© 2021 [Brian Fernandez](https://github.com/br14n-sol)
+
+This project is licensed under the MIT license. See the file [LICENSE](LICENSE) for details.
