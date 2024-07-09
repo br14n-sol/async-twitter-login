@@ -4,13 +4,9 @@
   "description": "Simple Twitter login, without much of the bullshit. and promises... who doesn't like them?",
   "version": "0.0.1",
   "license": "MIT",
+  "type": "module",
   "main": "./lib/index.js",
   "types": "/lib/index.d.ts",
-  "type": "module",
-  "exports": {
-    "require": "./lib/index.cjs",
-    "import": "./lib/index.js"
-  },
   "files": [
     "./lib"
   ],
