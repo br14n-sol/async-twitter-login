@@ -15,28 +15,30 @@
     "./lib"
   ],
   "scripts": {
-    "prepare": "husky install",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --fix --ext .ts",
+    "prepare": "husky",
+    "lint": "biome lint",
+    "lint:fix": "biome check --write ./src",
     "prebuild": "npm run lint",
     "build": "tsup --config tsup.config.json"
   },
+  "lint-staged": {
+    "*.ts": "npm run lint:fix"
+  },
   "devDependencies": {
-    "@commitlint/cli": "^17.4.4",
-    "@commitlint/config-conventional": "^17.4.4",
-    "@types/oauth": "^0.9.1",
-    "@typescript-eslint/eslint-plugin": "^5.53.0",
-    "eslint": "^8.34.0",
-    "eslint-config-standard-with-typescript": "^34.0.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-n": "^15.6.1",
-    "eslint-plugin-promise": "^6.1.1",
-    "husky": "^8.0.3",
-    "tsup": "^6.6.3",
-    "typescript": "^4.9.5"
+    "@biomejs/biome": "^1.8.3",
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/oauth": "^0.9.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.7",
+    "tsup": "^8.1.0",
+    "typescript": "5.2.2"
   },
   "dependencies": {
     "oauth": "^0.10.0"
+  },
+  "engines": {
+    "node": ">=18.20.x"
   },
   "repository": {
     "type": "git",
