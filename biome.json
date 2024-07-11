@@ -21,6 +21,7 @@
   "files": {
     "include": [
       "src/**/*.ts",
+      "tests/**/*.ts",
       "*.json"
     ],
     "ignore": [
