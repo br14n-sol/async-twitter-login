@@ -1,9 +1,9 @@
 import { OAuth } from 'oauth'
 import type {
   ICallbackOptions,
-  ICallbackResponse,
   IConstructorOptions,
-  TokenData
+  TokenData,
+  UserData
 } from './types.js'
 
 const REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
@@ -63,12 +63,8 @@ class TwitterLogin {
     })
   }
 
-  callback({
-    token,
-    tokenSecret,
-    verifier
-  }: ICallbackOptions): Promise<ICallbackResponse> {
-    return new Promise((resolve, reject) => {
+  callback({ token, tokenSecret, verifier }: ICallbackOptions) {
+    return new Promise<UserData>((resolve, reject) => {
       this.oauth.getOAuthAccessToken(
         token,
         tokenSecret,

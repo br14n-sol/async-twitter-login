@@ -16,7 +16,7 @@ export type TokenData = {
   redirectUrl: string
 }
 
-export interface ICallbackResponse {
+export type UserData = {
   id: string
   userName: string
   token: string
