@@ -74,8 +74,8 @@ class TwitterLogin {
           resolve({
             id,
             username,
-            token: oauthAccessToken,
-            tokenSecret: oauthAccessTokenSecret
+            accessToken: oauthAccessToken,
+            accessTokenSecret: oauthAccessTokenSecret
           })
         }
       )
