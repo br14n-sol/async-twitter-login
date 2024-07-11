@@ -1,9 +1,20 @@
-# async-twitter-login
+<h1 align="center">
+  async-twitter-login
+</h1>
 
-![npm](https://img.shields.io/npm/v/async-twitter-login)
-![npm](https://img.shields.io/npm/dm/async-twitter-login)
+<p align="center">
+  <b>Simple Twitter™(aka X™) Login with Promises.</b>
+</p>
 
-Simple Twitter login, without much of the bullshit. and promises... who doesn't like them?
+<div align="center">
+
+  ![license](https://img.shields.io/npm/l/async-twitter-login)
+  ![node-current](https://img.shields.io/node/v/async-twitter-login?color=darkgreen)
+  ![version](https://img.shields.io/npm/v/async-twitter-login?color=orange)
+  ![unpacked-size](https://img.shields.io/npm/unpacked-size/async-twitter-login)
+  ![downloads](https://img.shields.io/npm/dt/async-twitter-login)
+
+</div>
 
 ## ✨ Features
 
@@ -11,7 +22,7 @@ Simple Twitter login, without much of the bullshit. and promises... who doesn't 
 * Promises. 🎈
 * Readable Objects.
 
-All this in < 4kb, what else do you need? ✨
+All this in < 9kb, what else do you need? ✨
 
 ## 📦 Installation
 
@@ -25,38 +36,37 @@ We will configure two routes in our web server, `auth/login` and `auth/callback`
 
 ### Initialization
 
-We import and instantiate, you will need your consumer key and your comsumer secret... both are obtained when creating an application from the [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard).
+We import and instantiate, you will need your consumer key and your consumer secret... both are obtained when creating an application from the [Twitter Developer Portal](https://developer.twitter.com/en/portal/dashboard).
 
 Finally you will need your callback url, as we said before it would be `https://example.com/auth/callback`.
 
 ```js
-// ECMAScript
-import AsyncTwitterLogin from 'async-twitter-login'
+import TwitterLogin from 'async-twitter-login'
 
-// CommonJS
-const AsyncTwitterLogin = require('async-twitter-login').default
-
-const twitterLogin = new AsyncTwitterLogin({
+const twitterLogin = new TwitterLogin({
   consumerKey: 'your-consumer-key',
   consumerSecret: 'your-consumer-secret',
-  callbackUrl: 'https://example.com/auth/callback'
+  callbackURL: 'https://example.com/auth/callback'
 })
 ```
 
 ### Login
 
-From our `auth/login` path we call the `request()` method and save in a safe place `tokenSecret` to use it later.
+From our `auth/login` path we call the `getRequestToken()` method and save in a safe place `token` and `tokenSecret` to use it later.
 
 ```js
 app.get('/auth/login', async (req, res) => {
   try {
-    const { token, tokenSecret, redirectUrl } = await twitterLogin.request()
+    // Get the request token and the redirect URL
+    const { token, tokenSecret, redirectURL } = await twitterLogin.getRequestToken()
     
-    // Save the token secret in a safe place
+    // Save the token and token secret in safe place
+    req.session.token = token
     req.session.tokenSecret = tokenSecret
 
-    // Redirect to Twitter to authorize the application
-    res.redirect(redirectUrl)
+    // Redirect to Twitter to authenticate in the application
+    res.redirect(redirectURL)
+    return
   } catch (err) {
     // Handle errors
   }
@@ -65,33 +75,44 @@ app.get('/auth/login', async (req, res) => {
 
 ### Callback
 
-If the user completes the authorization from twitter, he will be redirected to his `auth/callback` path together with `oauth_token` and `oauth_verifier` as query parameters in the URL, they are accessed with `req.query`.
+If the user completes the authorization from twitter, he will be redirected to his `auth/callback` path together with `oauth_token` and `oauth_verifier` as query parameters in the URL, they are accessed with `req.query` but we only need the `oauth_verifier`.
 
-We call the `callback()` method from our `auth/callback` path and pass the parameters to it along with the `tokenSecret` that we saved in the previous step.
+We call the `getAccessToken()` method from our `auth/callback` path and pass the parameters to it along with the `token` and `tokenSecret` that we saved in the previous step.
 
-This method will return a user object. 🧔
+This method will return a user object with the user's data. 🙍‍♂️
 
 ```js
 app.get('/auth/callback', async (req, res) => {
-  try {
-    const { oauth_token: token, oauth_verifier: verifier } = req.query
-    const tokenSecret = req.session.tokenSecret
-    const user = await twitterLogin.callback(token, tokenSecret, verifier)
+  // Get the token and token secret from the session
+  const { token, tokenSecret } = req.session
 
-    // Delete the token secret from the session
+  // Get the oauth_verifier from the query parameters
+  const { oauth_verifier: verifier } = req.query
+
+  if (!token || !tokenSecret || !verifier) {
+    // Handle missing or invalid data
+  }
+
+  try {
+    // Get the access token and the user data
+    const user = await twitterLogin.getAccessToken({ token, tokenSecret, verifier })
+
+    // Delete the token and token secret from the session
+    delete req.session.token
     delete req.session.tokenSecret
 
     // The user object is a readable object with the user's data.
     // user = {
     //   id,
-    //   userName,
-    //   token,
-    //   tokenSecret
+    //   username,
+    //   accessToken,
+    //   accessTokenSecret
     // }
     req.session.user = user
 
     // Redirect to the home page
     res.redirect('/')
+    return
   } catch (err) {
     // Handle errors
   }
@@ -103,3 +124,11 @@ app.get('/auth/callback', async (req, res) => {
 © 2021 [Brian Fernandez](https://github.com/br14n-sol)
 
 This project is licensed under the MIT license. See the file [LICENSE](LICENSE) for details.
+
+## Disclaimer
+
+No affiliation with X Corp.
+
+This package is a third-party offering and is not a product of X Corp.
+
+Twitter™ and X™ are trademarks of X Corp.
