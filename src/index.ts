@@ -33,8 +33,8 @@ class TwitterLogin {
     )
   }
 
-  async request(): Promise<IRequestResponse> {
-    return await new Promise((resolve, reject) => {
+  request(): Promise<IRequestResponse> {
+    return new Promise((resolve, reject) => {
       this.oauth.getOAuthRequestToken(
         (error, oauthToken, oauthTokenSecret, results) => {
           if (error != null) {
@@ -63,12 +63,12 @@ class TwitterLogin {
     })
   }
 
-  async callback({
+  callback({
     token,
     tokenSecret,
     verifier
   }: ICallbackOptions): Promise<ICallbackResponse> {
-    return await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.oauth.getOAuthAccessToken(
         token,
         tokenSecret,
