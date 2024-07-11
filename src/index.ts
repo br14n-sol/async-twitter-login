@@ -63,7 +63,7 @@ class TwitterLogin {
     })
   }
 
-  callback({ token, tokenSecret, verifier }: ICallbackOptions) {
+  getAccessToken({ token, tokenSecret, verifier }: ICallbackOptions) {
     return new Promise<UserData>((resolve, reject) => {
       this.oauth.getOAuthAccessToken(
         token,
