@@ -13,22 +13,18 @@ const ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
 const AUTHENTICATE_URL = 'https://api.twitter.com/oauth/authenticate'
 
 class TwitterLogin {
-  private readonly consumerKey: string
-  private readonly consumerSecret: string
-  private readonly callbackUrl: string
   private readonly oauth: OAuth
 
   constructor(opts: TwitterLoginOptions) {
-    this.consumerKey = opts.consumerKey
-    this.consumerSecret = opts.consumerSecret
-    this.callbackUrl = opts.callbackUrl
+    const { consumerKey, consumerSecret, callbackUrl } = opts
+
     this.oauth = new OAuth(
       REQUEST_TOKEN_URL,
       ACCESS_TOKEN_URL,
-      this.consumerKey,
-      this.consumerSecret,
+      consumerKey,
+      consumerSecret,
       '1.0A',
-      this.callbackUrl,
+      callbackUrl,
       'HMAC-SHA1'
     )
   }
