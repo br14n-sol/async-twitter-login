@@ -33,7 +33,7 @@ class TwitterLogin {
     )
   }
 
-  request() {
+  getRequestToken() {
     return new Promise<TokenData>((resolve, reject) => {
       this.oauth.getOAuthRequestToken(
         (error, oauthToken, oauthTokenSecret, results) => {
