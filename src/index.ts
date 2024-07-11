@@ -40,11 +40,8 @@ class TwitterLogin {
 
           const { oauth_callback_confirmed: callbackConfirmed } = results
           if (callbackConfirmed !== 'true') {
-            reject(
-              new Error(
-                'AsyncTwitterLogin: `oauth_callback_confirmed` is not `true` (Does your application have a callback url configured?)'
-              )
-            )
+            const errorMessage = `TwitterLogin: 'oauth_callback_confirmed' is different from 'true', got '${callbackConfirmed}'`
+            reject(new Error(errorMessage))
             return
           }
 
