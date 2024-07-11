@@ -12,6 +12,7 @@
   ],
   "scripts": {
     "prepare": "husky",
+    "prepublishOnly": "npm run build",
     "lint": "biome lint",
     "lint:fix": "biome check --write ./src",
     "prebuild": "npm run lint",
