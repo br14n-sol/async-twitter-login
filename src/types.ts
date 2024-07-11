@@ -1,7 +1,7 @@
 export type TwitterLoginOptions = {
   consumerKey: string
   consumerSecret: string
-  callbackUrl: string
+  callbackURL: string
 }
 
 export type GetAccessTokenOptions = {
@@ -13,7 +13,7 @@ export type GetAccessTokenOptions = {
 export type TokenData = {
   token: string
   tokenSecret: string
-  redirectUrl: string
+  redirectURL: string
 }
 
 export type UserData = {

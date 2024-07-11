@@ -16,7 +16,7 @@ class TwitterLogin {
   private readonly oauth: OAuth
 
   constructor(opts: TwitterLoginOptions) {
-    const { consumerKey, consumerSecret, callbackUrl } = opts
+    const { consumerKey, consumerSecret, callbackURL } = opts
 
     this.oauth = new OAuth(
       REQUEST_TOKEN_URL,
@@ -24,7 +24,7 @@ class TwitterLogin {
       consumerKey,
       consumerSecret,
       '1.0A',
-      callbackUrl,
+      callbackURL,
       'HMAC-SHA1'
     )
   }
@@ -45,11 +45,11 @@ class TwitterLogin {
             return
           }
 
-          const redirectUrl = `${AUTHENTICATE_URL}?oauth_token=${oauthToken}`
+          const redirectURL = `${AUTHENTICATE_URL}?oauth_token=${oauthToken}`
           resolve({
             token: oauthToken,
             tokenSecret: oauthTokenSecret,
-            redirectUrl
+            redirectURL
           })
         }
       )
