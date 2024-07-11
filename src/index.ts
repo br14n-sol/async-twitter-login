@@ -12,7 +12,7 @@ const ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
 // Taking into account: https://stackoverflow.com/questions/14336605/twitter-does-not-remember-authorization
 const AUTHENTICATE_URL = 'https://api.twitter.com/oauth/authenticate'
 
-class AsyncTwitterLogin {
+class TwitterLogin {
   private readonly consumerKey: string
   private readonly consumerSecret: string
   private readonly callbackUrl: string
@@ -92,4 +92,4 @@ class AsyncTwitterLogin {
   }
 }
 
-export { AsyncTwitterLogin }
+export default TwitterLogin
