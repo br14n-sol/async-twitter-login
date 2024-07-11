@@ -68,10 +68,10 @@ class TwitterLogin {
             return
           }
 
-          const { user_id: id, screen_name: userName } = results
+          const { user_id: id, screen_name: username } = results
           resolve({
             id,
-            userName,
+            username,
             token: oauthAccessToken,
             tokenSecret: oauthAccessTokenSecret
           })

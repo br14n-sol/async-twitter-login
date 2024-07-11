@@ -18,7 +18,7 @@ export type TokenData = {
 
 export type UserData = {
   id: string
-  userName: string
+  username: string
   token: string
   tokenSecret: string
 }
