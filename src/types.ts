@@ -5,8 +5,8 @@ export type TwitterLoginOptions = {
 }
 
 export type GetAccessTokenOptions = {
-  token: string
-  tokenSecret: string
+  requestToken: string
+  requestTokenSecret: string
   verifier: string
 }
 

@@ -57,12 +57,12 @@ class TwitterLogin {
   }
 
   getAccessToken(opts: GetAccessTokenOptions) {
-    const { token, tokenSecret, verifier } = opts
+    const { requestToken, requestTokenSecret, verifier } = opts
 
     return new Promise<UserData>((resolve, reject) => {
       this.oauth.getOAuthAccessToken(
-        token,
-        tokenSecret,
+        requestToken,
+        requestTokenSecret,
         verifier,
         (error, oauthAccessToken, oauthAccessTokenSecret, results) => {
           if (error != null) {
