@@ -1,10 +1,10 @@
 import { OAuth } from 'oauth'
 import type {
-  IConstructorOptions,
   ICallbackOptions,
-  IRequestResponse,
-  ICallbackResponse
-} from './types'
+  ICallbackResponse,
+  IConstructorOptions,
+  IRequestResponse
+} from './types.js'
 
 const REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 const ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
@@ -18,7 +18,7 @@ class AsyncTwitterLogin {
   private readonly callbackUrl: string
   private readonly oauth: OAuth
 
-  constructor (args: IConstructorOptions) {
+  constructor(args: IConstructorOptions) {
     this.consumerKey = args.consumerKey
     this.consumerSecret = args.consumerSecret
     this.callbackUrl = args.callbackUrl
@@ -33,50 +33,60 @@ class AsyncTwitterLogin {
     )
   }
 
-  async request (): Promise<IRequestResponse> {
+  async request(): Promise<IRequestResponse> {
     return await new Promise((resolve, reject) => {
-      this.oauth.getOAuthRequestToken((error, oauthToken, oauthTokenSecret, results) => {
-        if (error != null) {
-          reject(error)
-          return
-        }
+      this.oauth.getOAuthRequestToken(
+        (error, oauthToken, oauthTokenSecret, results) => {
+          if (error != null) {
+            reject(error)
+            return
+          }
 
-        const { oauth_callback_confirmed: callbackConfirmed } = results
-        if (callbackConfirmed !== 'true') {
-          reject(new Error('AsyncTwitterLogin: `oauth_callback_confirmed` is not `true` (Does your application have a callback url configured?)'))
-          return
-        }
+          const { oauth_callback_confirmed: callbackConfirmed } = results
+          if (callbackConfirmed !== 'true') {
+            reject(
+              new Error(
+                'AsyncTwitterLogin: `oauth_callback_confirmed` is not `true` (Does your application have a callback url configured?)'
+              )
+            )
+            return
+          }
 
-        const redirectUrl = `${AUTHENTICATE_URL}?oauth_token=${oauthToken}`
-        resolve({
-          token: oauthToken,
-          tokenSecret: oauthTokenSecret,
-          redirectUrl
-        })
-      })
+          const redirectUrl = `${AUTHENTICATE_URL}?oauth_token=${oauthToken}`
+          resolve({
+            token: oauthToken,
+            tokenSecret: oauthTokenSecret,
+            redirectUrl
+          })
+        }
+      )
     })
   }
 
-  async callback ({
+  async callback({
     token,
     tokenSecret,
     verifier
   }: ICallbackOptions): Promise<ICallbackResponse> {
     return await new Promise((resolve, reject) => {
-      this.oauth.getOAuthAccessToken(token, tokenSecret, verifier, (error, oauthAccessToken, oauthAccessTokenSecret, results) => {
-        if (error != null) {
-          reject(error)
-          return
-        }
+      this.oauth.getOAuthAccessToken(
+        token,
+        tokenSecret,
+        verifier,
+        (error, oauthAccessToken, oauthAccessTokenSecret, results) => {
+          if (error != null) {
+            reject(error)
+            return
+          }
 
-        const { user_id: id, screen_name: userName } = results
-        resolve({
-          id,
-          userName,
-          token: oauthAccessToken,
-          tokenSecret: oauthAccessTokenSecret
-        })
-      }
+          const { user_id: id, screen_name: userName } = results
+          resolve({
+            id,
+            userName,
+            token: oauthAccessToken,
+            tokenSecret: oauthAccessTokenSecret
+          })
+        }
       )
     })
   }
