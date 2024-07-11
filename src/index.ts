@@ -1,8 +1,8 @@
 import { OAuth } from 'oauth'
 import type {
   ICallbackOptions,
-  IConstructorOptions,
   TokenData,
+  TwitterLoginOptions,
   UserData
 } from './types.js'
 
@@ -18,10 +18,10 @@ class TwitterLogin {
   private readonly callbackUrl: string
   private readonly oauth: OAuth
 
-  constructor(args: IConstructorOptions) {
-    this.consumerKey = args.consumerKey
-    this.consumerSecret = args.consumerSecret
-    this.callbackUrl = args.callbackUrl
+  constructor(opts: TwitterLoginOptions) {
+    this.consumerKey = opts.consumerKey
+    this.consumerSecret = opts.consumerSecret
+    this.callbackUrl = opts.callbackUrl
     this.oauth = new OAuth(
       REQUEST_TOKEN_URL,
       ACCESS_TOKEN_URL,

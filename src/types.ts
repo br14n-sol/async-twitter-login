@@ -1,4 +1,4 @@
-export interface IConstructorOptions {
+export type TwitterLoginOptions = {
   consumerKey: string
   consumerSecret: string
   callbackUrl: string
