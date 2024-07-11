@@ -1,6 +1,6 @@
 import { OAuth } from 'oauth'
 import type {
-  ICallbackOptions,
+  GetAccessTokenOptions,
   TokenData,
   TwitterLoginOptions,
   UserData
@@ -56,7 +56,9 @@ class TwitterLogin {
     })
   }
 
-  getAccessToken({ token, tokenSecret, verifier }: ICallbackOptions) {
+  getAccessToken(opts: GetAccessTokenOptions) {
+    const { token, tokenSecret, verifier } = opts
+
     return new Promise<UserData>((resolve, reject) => {
       this.oauth.getOAuthAccessToken(
         token,

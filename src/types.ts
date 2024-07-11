@@ -4,7 +4,7 @@ export type TwitterLoginOptions = {
   callbackUrl: string
 }
 
-export interface ICallbackOptions {
+export type GetAccessTokenOptions = {
   token: string
   tokenSecret: string
   verifier: string
