@@ -3,7 +3,7 @@ import type {
   ICallbackOptions,
   ICallbackResponse,
   IConstructorOptions,
-  IRequestResponse
+  TokenData
 } from './types.js'
 
 const REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
@@ -33,8 +33,8 @@ class TwitterLogin {
     )
   }
 
-  request(): Promise<IRequestResponse> {
-    return new Promise((resolve, reject) => {
+  request() {
+    return new Promise<TokenData>((resolve, reject) => {
       this.oauth.getOAuthRequestToken(
         (error, oauthToken, oauthTokenSecret, results) => {
           if (error != null) {

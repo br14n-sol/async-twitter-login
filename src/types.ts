@@ -10,7 +10,7 @@ export interface ICallbackOptions {
   verifier: string
 }
 
-export interface IRequestResponse {
+export type TokenData = {
   token: string
   tokenSecret: string
   redirectUrl: string
