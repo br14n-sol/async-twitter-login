@@ -88,4 +88,6 @@ class TwitterLogin {
   }
 }
 
+export type { TokenData, UserData }
+
 export default TwitterLogin
