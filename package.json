@@ -1,7 +1,7 @@
 {
   "name": "async-twitter-login",
   "author": "Brian Fernandez",
-  "description": "Simple Twitter login, without much of the bullshit. and promises... who doesn't like them?",
+  "description": "Simple Twitter™(aka X™) Login with Promises.",
   "version": "0.0.1",
   "license": "MIT",
   "type": "module",
