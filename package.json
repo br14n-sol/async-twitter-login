@@ -2,7 +2,7 @@
   "name": "async-twitter-login",
   "author": "Brian Fernandez",
   "description": "Simple Twitter™(aka X™) Login with Promises.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "type": "module",
   "main": "./lib/index.js",
